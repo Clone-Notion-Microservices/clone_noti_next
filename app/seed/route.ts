@@ -69,9 +69,9 @@
 
 //   const insertedCustomers = await Promise.all(
 //     customers.map(
-//       (customer) => client.sql`
+//       (customers) => client.sql`
 //         INSERT INTO customers (id, name, email, image_url)
-//         VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
+//         VALUES (${customers.id}, ${customers.name}, ${customers.email}, ${customers.image_url})
 //         ON CONFLICT (id) DO NOTHING;
 //       `,
 //     ),

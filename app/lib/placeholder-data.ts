@@ -144,4 +144,49 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
-export { users, customers, invoices, revenue };
+const latestInvoices = [
+  {
+    id: 'aaaa647d-df84-4220-8879-694d0b45c606',
+    name: 'Sydney Pham',
+    image_url: '/customers/amy-burns.png',
+    email: 'james80@yahoo.com',
+    amount: '$832.94'
+  },
+  {
+    id: 'eaaba52f-18b7-42cd-95d6-75b074a74837',
+    name: 'Jackie Harris',
+    image_url: '/customers/balazs-orban.png',
+    email: 'bruce00@hotmail.com',
+    amount: '$540.17'
+  },
+  {
+    id: 'e5c667a2-f96a-410d-9174-7e733bf5ae3e',
+    name: 'Ashley Graham',
+    image_url: '/customers/delba-de-oliveira.png',
+    email: 'kimberly83@walker.com',
+    amount: '$884.79'
+  },
+  {
+    id: '1dbc06c0-67c0-427f-8190-0bc490ea77b0',
+    name: 'Michael Wolfe',
+    image_url: '/customers/evil-rabbit.png',
+    email: 'johnsonalexander@hotmail.com',
+    amount: '$474.68'
+  },
+  {
+    id: '78f687ea-402c-46fe-a586-3dd0bd279a5c',
+    name: 'Kathleen Owens',
+    image_url: '/customers/lee-robinson.png',
+    email: 'elizabeth19@rhodes.com',
+    amount: '$290.05'
+  },
+  {
+    id: '12422884-9a2f-4a9f-a0a6-37dccbfc46f0',
+    name: 'William Galloway',
+    image_url: '/customers/michael-novotny.png',
+    email: 'whitneywilliams@hall-johnson.com',
+    amount: '$442.27'
+  }
+];
+
+export { users, customers, invoices, revenue, latestInvoices };
