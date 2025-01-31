@@ -2,12 +2,12 @@
 
 // const client = await db.connect();
 
-// async function listInvoices() {
+// async function listTasks() {
 // 	const data = await client.sql`
-//     SELECT invoices.amount, customers.name
-//     FROM invoices
-//     JOIN customers ON invoices.customer_id = customers.id
-//     WHERE invoices.amount = 666;
+//     SELECT tasks.amount, customers.name
+//     FROM tasks
+//     JOIN customers ON tasks.customer_id = customers.id
+//     WHERE tasks.amount = 666;
 //   `;
 
 // 	return data.rows;
@@ -19,7 +19,7 @@ export async function GET() {
       'Uncomment this file and remove this line. You can delete this file when you are finished.',
   });
   // try {
-  // 	return Response.json(await listInvoices());
+  // 	return Response.json(await listTasks());
   // } catch (error) {
   // 	return Response.json({ error }, { status: 500 });
   // }

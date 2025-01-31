@@ -22,14 +22,30 @@ export default function Page() {
             href="/login"
             className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
           >
-            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
+            <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6"/>
           </Link>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          <Image src="/hero-desktop.png" alt="Screnshot" width={1000} height={760} className="hidden md:block" />
-          <Image src="/hero-mobile.png" alt="Screnshot" width={520} height={620} className="block md:hidden" />
+          {/*<Image src="/hero-desktop.png" alt="Screnshot" width={1000} height={760} className="hidden md:block"/>*/}
+          {/*<Image src="/hero-mobile.png" alt="Screnshot" width={520} height={620} className="block md:hidden"/>*/}
+
+          {/*<div data-controller="blocks--cover--re-render-video">*/}
+          {/*  <video className="absolute inset-0 object-cover h-full w-full "*/}
+          {/*         data-blocks--cover--re-render-video-target="videoElement" loop="loop" muted="muted" autoPlay="autoplay"*/}
+          {/*         playsInline="playsinline">*/}
+          {/*    <source*/}
+          {/*      src="https://videos.teamtailor-cdn.com/teamtailor-na-maroon-videos/uploads_converted/cover_large/3b0a0fa42e045dba3c68963c2af57e677c571444.mp4"*/}
+          {/*      type="video/mp4"/>*/}
+          {/*    <source*/}
+          {/*      src="https://videos.teamtailor-cdn.com/teamtailor-na-maroon-videos/uploads_converted/cover_large/3b0a0fa42e045dba3c68963c2af57e677c571444.webm"*/}
+          {/*      type="video/webm"/>*/}
+          {/*  </video>*/}
+          {/*</div>*/}
         </div>
       </div>
+
+      {/*rgba(var(--company-button-bg-color),var(--tw-bg-opacity,1))*/}
+
     </main>
   );
 }

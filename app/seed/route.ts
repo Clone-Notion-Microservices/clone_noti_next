@@ -1,6 +1,6 @@
 // import bcrypt from 'bcrypt';
 // import { db } from '@vercel/postgres';
-// import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+// import { tasks, customers, revenue, users } from '../lib/placeholder-data';
 
 // const client = await db.connect();
 
@@ -29,11 +29,11 @@
 //   return insertedUsers;
 // }
 
-// async function seedInvoices() {
+// async function seedTasks() {
 //   await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
 //   await client.sql`
-//     CREATE TABLE IF NOT EXISTS invoices (
+//     CREATE TABLE IF NOT EXISTS tasks (
 //       id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
 //       customer_id UUID NOT NULL,
 //       amount INT NOT NULL,
@@ -42,17 +42,17 @@
 //     );
 //   `;
 
-//   const insertedInvoices = await Promise.all(
-//     invoices.map(
-//       (invoice) => client.sql`
-//         INSERT INTO invoices (customer_id, amount, status, date)
-//         VALUES (${invoice.customer_id}, ${invoice.amount}, ${invoice.status}, ${invoice.date})
+//   const insertedTasks = await Promise.all(
+//     tasks.map(
+//       (task) => client.sql`
+//         INSERT INTO tasks (customer_id, amount, status, date)
+//         VALUES (${task.customer_id}, ${task.amount}, ${task.status}, ${task.date})
 //         ON CONFLICT (id) DO NOTHING;
 //       `,
 //     ),
 //   );
 
-//   return insertedInvoices;
+//   return insertedTasks;
 // }
 
 // async function seedCustomers() {
@@ -110,7 +110,7 @@ export async function GET() {
   //   await client.sql`BEGIN`;
   //   await seedUsers();
   //   await seedCustomers();
-  //   await seedInvoices();
+  //   await seedTasks();
   //   await seedRevenue();
   //   await client.sql`COMMIT`;
 

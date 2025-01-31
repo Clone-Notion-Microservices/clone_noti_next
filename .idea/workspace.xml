@@ -5,20 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8a4802ce-c6fc-4d0d-91c9-f7088843aa7d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/dashboard/customers/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/invoices/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/layout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/loading.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/ui/fonts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dashboard/projects/[id]/edit/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dashboard/projects/create/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dashboard/projects/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dashboard/tasks/[id]/edit/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dashboard/tasks/create/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dashboard/tasks/error.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dashboard/tasks/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/lib/actions.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ui/projects/buttons.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ui/projects/create-form.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ui/projects/edit-form.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ui/projects/table.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ui/tasks/create-form.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/ui/tasks/status.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/invoices/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/lib/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/data.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/lib/definitions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/definitions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/lib/placeholder-data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/placeholder-data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/lib/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/query/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/query/route.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/seed/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/seed/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ui/dashboard/latest-invoices.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/dashboard/latest-invoices.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/customers/table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/customers/table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/dashboard/cards.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/dashboard/cards.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/dashboard/latest-invoices.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/dashboard/latest-tasks.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/ui/dashboard/nav-links.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/dashboard/nav-links.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/ui/dashboard/revenue-chart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/dashboard/revenue-chart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/breadcrumbs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/tasks/breadcrumbs.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/buttons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/tasks/buttons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/create-form.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/edit-form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/tasks/edit-form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/pagination.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/tasks/pagination.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/status.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/invoices/table.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/tasks/table.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/search.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/ui/skeletons.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/ui/skeletons.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,23 +61,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "/Users/rubencespedes/Documents/Development/clone_noti_next/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.data.ts.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rubencespedes/Documents/Development/clone_noti_next/app/ui/projects&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/rubencespedes/Documents/Development/clone_noti_next/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/ui/projects" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/nextjs-projects-tasks/src" />
       <recent name="$PROJECT_DIR$/nextjs-projects-tasks" />
@@ -80,7 +110,11 @@
       <workItem from="1737998395767" duration="1707000" />
       <workItem from="1738000111896" duration="59000" />
       <workItem from="1738000175670" duration="283000" />
-      <workItem from="1738000463599" duration="17290000" />
+      <workItem from="1738000463599" duration="18610000" />
+      <workItem from="1738088650509" duration="34017000" />
+      <workItem from="1738161084044" duration="26433000" />
+      <workItem from="1738263690884" duration="29780000" />
+      <workItem from="1738339660653" duration="871000" />
     </task>
     <servers />
   </component>
