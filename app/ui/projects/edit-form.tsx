@@ -19,7 +19,7 @@ export default function EditProjectForm(
 
         {/* Project Name */}
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label htmlFor="name" className="mb-2 block text-sm font-medium">
             Name Project
           </label>
           <div className="relative mt-2 rounded-md">
@@ -37,9 +37,9 @@ export default function EditProjectForm(
           </div>
         </div>
 
-        {/* Project Amount */}
+        {/* Project Description */}
         <div className="mb-4">
-          <label htmlFor="amount" className="mb-2 block text-sm font-medium">
+          <label htmlFor="description" className="mb-2 block text-sm font-medium">
             Description Project
           </label>
           <div className="relative mt-2 rounded-md">

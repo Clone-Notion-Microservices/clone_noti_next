@@ -4,7 +4,8 @@ import {formatDateToLocal} from '@/app/lib/utils';
 import {fetchFilteredProjects} from '@/app/lib/data';
 
 export default async function ProjectsTable(
-  {query, currentPage,}: { query: string; currentPage: number; }) {
+  {query, currentPage}: { query: string; currentPage: number; }
+) {
   const projects = await fetchFilteredProjects(query, currentPage);
 
   return (
@@ -21,7 +22,7 @@ export default async function ProjectsTable(
                   <div>
                     <div className="mb-2 flex items-center">
                       <Image
-                        src='/customers/evil-rabbit.png'
+                        src='/users/evil-rabbit.png'
                         className="mr-2 rounded-full"
                         width={28}
                         height={28}
@@ -70,7 +71,7 @@ export default async function ProjectsTable(
                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                   <div className="flex items-center gap-3">
                     <Image
-                      src='/customers/evil-rabbit.png'
+                      src='/users/evil-rabbit.png'
                       className="rounded-full"
                       width={28}
                       height={28}

@@ -1,6 +1,6 @@
 'use client';
 
-import {CustomerField, ProjectField, TaskForm} from '@/app/lib/definitions';
+import {UserField, ProjectField, TaskForm} from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -14,11 +14,11 @@ import {CakeIcon} from "@heroicons/react/16/solid";
 
 export default function EditTaskForm({
                                        task,
-                                       customers,
+                                       users,
                                        projects,
                                      }: {
   task: TaskForm;
-  customers: CustomerField[];
+  users: UserField[];
   projects: ProjectField[];
 }) {
   const updateInvoiceWithId = updateTasks.bind(null, String(task.id));
@@ -27,24 +27,24 @@ export default function EditTaskForm({
   return (
     <form action={updateInvoiceWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Customer Name */}
+        {/* User Name */}
         <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose customer
+          <label htmlFor="user" className="mb-2 block text-sm font-medium">
+            Choose user
           </label>
           <div className="relative">
             <select
-              id="customer"
-              name="customerId"
+              id="user"
+              name="userId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue={task.assignedTo}
             >
               <option value="" disabled>
-                Select a customer
+                Select a user
               </option>
-              {customers.map((customer: any) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
+              {users.map((user: any) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
                 </option>
               ))}
             </select>

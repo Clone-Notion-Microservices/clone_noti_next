@@ -1,4 +1,4 @@
-import {fetchProjectsPages, fetchTasksPages} from "@/app/lib/data";
+import {fetchFilteredProjects} from "@/app/lib/data";
 import {lusitana} from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
 import {Suspense} from "react";
@@ -19,7 +19,8 @@ export default async function ProjectsPage(
   const searchParams = await props.searchParams;
   const currentPage = Number(searchParams?.page) || 1;
   const query = searchParams?.query || '';
-  const { lastPage } = await fetchProjectsPages(query, currentPage);
+  const { meta } = await fetchFilteredProjects(query, currentPage);
+  const lastPage = meta.lastPage || 1;
 
   return (
     <div className="w-full">

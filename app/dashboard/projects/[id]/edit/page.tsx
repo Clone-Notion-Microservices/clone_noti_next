@@ -1,6 +1,6 @@
 import Form from '@/app/ui/projects/edit-form';
 import Breadcrumbs from '@/app/ui/tasks/breadcrumbs';
-import {fetchProjectById, fetchTasksPages} from '@/app/lib/data';
+import {fetchFilteredTasks, fetchProjectById} from '@/app/lib/data';
 import {lusitana} from "@/app/ui/fonts";
 import {Suspense} from "react";
 import {TasksTableSkeleton} from "@/app/ui/skeletons";
@@ -13,7 +13,8 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   const project = await fetchProjectById(id);
   const query = ''
   const currentPage = 1
-  const { lastPage } = await fetchTasksPages(query, currentPage, id);
+  const { meta } = await fetchFilteredTasks(query, currentPage, id);
+  const lastPage = meta.lastPage || 1;
 
   return (
     <main>

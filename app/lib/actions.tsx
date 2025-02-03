@@ -3,10 +3,22 @@
 import {z} from 'zod';
 import {revalidatePath} from "next/cache";
 import {redirect} from "next/navigation";
-import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
+import {auth, signIn} from '@/auth';
+import {AuthError} from "next-auth";
 
-const BASE_URL = 'http://localhost:3010/api';
+const BASE_URL = process.env.BACKEND_URL;
+
+async function extracted(method: string, body: string = '') {
+  const session = await auth();
+  return {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+    body: body
+  };
+}
 
 // TASKS SECTION
 
@@ -24,8 +36,9 @@ const CreateTask = FormSchemaTask.omit({id: true})
 
 export async function createTask(formData: FormData) {
 
+  // const token = req.cookies.get('token')?.value;
   const raw = CreateTask.parse({
-    assignedTo: Number(formData.get('customerId')),
+    assignedTo: Number(formData.get('userId')),
     projectId: Number(formData.get('projectId')),
     title: formData.get('title'),
     description: formData.get('description'),
@@ -33,13 +46,7 @@ export async function createTask(formData: FormData) {
     status: formData.get('status'),
   });
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(raw)
-  };
+  const requestOptions = await extracted("POST", JSON.stringify(raw));
 
   const response = await fetch(`${BASE_URL}/tasks`, requestOptions);
 
@@ -63,13 +70,7 @@ export async function updateTasks(id: string, formData: FormData) {
     status: formData.get('status'),
   });
 
-  const requestOptions = {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(raw)
-  };
+  const requestOptions = await extracted("PATCH", JSON.stringify(raw));
 
   const response = await fetch(`${BASE_URL}/tasks/${id}`, requestOptions);
 
@@ -82,7 +83,10 @@ export async function updateTasks(id: string, formData: FormData) {
 }
 
 export async function deleteTask(id: string) {
-  const response = await fetch(`${BASE_URL}/tasks/${id}`, {method: 'DELETE'});
+
+  const requestOptions = await extracted("DELETE");
+
+  const response = await fetch(`${BASE_URL}/tasks/${id}`, requestOptions);
 
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -111,14 +115,7 @@ export async function createProjects(formData: FormData) {
     description: formData.get('description'),
   });
 
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(raw)
-  };
-
+  const requestOptions = await extracted("POST", JSON.stringify(raw));
 
   const response = await fetch(`${BASE_URL}/projects`, requestOptions);
 
@@ -138,13 +135,7 @@ export async function updateProjects(id: string, formData: FormData) {
     description: formData.get('description'),
   });
 
-  const requestOptions = {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(raw)
-  };
+  const requestOptions = await extracted("PATCH", JSON.stringify(raw));
 
   const response = await fetch(`${BASE_URL}/projects/${id}`, requestOptions);
 
@@ -157,7 +148,9 @@ export async function updateProjects(id: string, formData: FormData) {
 }
 
 export async function deleteProject(id: string) {
-  const response = await fetch(`${BASE_URL}/projects/${id}`, {method: 'DELETE'});
+  const requestOptions = await extracted("DELETE");
+
+  const response = await fetch(`${BASE_URL}/projects/${id}`, requestOptions);
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
@@ -167,13 +160,30 @@ export async function deleteProject(id: string) {
 // END PROJECTS SECTION
 
 // LOGIN SECTION
+export async function loginUser(email: string, password: string) {
+  try {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({email,password}),
+    };
+
+    const response = await fetch(`${BASE_URL}/auth/login`,  requestOptions);
+    return await response.json()
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch projects.');
+  }
+}
+
 
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
 ) {
   try {
-    console.log(formData)
     await signIn('credentials', formData);
   } catch (error) {
     if (error instanceof AuthError) {
@@ -189,3 +199,56 @@ export async function authenticate(
 }
 
 // END LOGIN SECTION
+
+
+// USER SECTION
+
+const FormSchemaUser = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  available: z.boolean(),
+  role: z.string(),
+  projects_permission: z
+    .union([
+      z.string(),
+      z.array(z.string()),
+      z.undefined(),
+    ]),
+  tasks_permission: z
+    .union([
+      z.string(),
+      z.array(z.string()),
+      z.undefined(),
+    ]),
+});
+
+const CreateUser = FormSchemaUser.omit({id: true})
+
+export async function deleteUser(id: string) {}
+
+const UpdateUser = FormSchemaUser.omit({id: true});
+
+export async function updateUser(id: string, formData: FormData) {
+
+  console.log(formData);
+
+  const raw = UpdateUser.parse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    available: Boolean(formData.get('available')),
+    role: formData.get('role'),
+    projects_permission: formData.getAll('projects') ?? [],
+    tasks_permission: formData.getAll('tasks') ?? [],
+  });
+  const requestOptions = await extracted("PATCH", JSON.stringify(raw));
+
+  const response = await fetch(`${BASE_URL}/users/${id}`, requestOptions);
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  revalidatePath('/dashboard/users');
+  redirect('/dashboard/users');
+}

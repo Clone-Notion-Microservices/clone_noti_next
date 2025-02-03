@@ -5,7 +5,7 @@ import {CreateTask} from '@/app/ui/tasks/buttons';
 import {lusitana} from '@/app/ui/fonts';
 import {TasksTableSkeleton} from '@/app/ui/skeletons';
 import {Suspense} from 'react';
-import {fetchTasksPages} from "@/app/lib/data";
+import {fetchFilteredTasks} from "@/app/lib/data";
 
 
 export default async function TasksPage(
@@ -17,7 +17,10 @@ export default async function TasksPage(
   const searchParams = await props.searchParams;
   const currentPage = Number(searchParams?.page) || 1;
   const query = searchParams?.query || '';
-  const { lastPage } = await fetchTasksPages(query, currentPage);
+  const { meta } = await fetchFilteredTasks(query, currentPage);
+  const lastPage = meta.lastPage || 1;
+
+
 
   return (
     <div className="w-full">

@@ -1,87 +1,76 @@
-import {customers, latestTasks, revenue, TasksTable} from '../lib/placeholder-data';
+import {auth} from "@/auth";
+import {User} from "@/app/lib/definitions";
 
-const BASE_URL = 'http://localhost:3010/api';
+const BASE_URL = process.env.BACKEND_URL;
 const ITEMS_PER_PAGE = 6;
+
+async function extracted(method: string) {
+  const session = await auth();
+  return {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${session?.accessToken}`,
+    },
+  };
+}
 
 // DASHBOARD SECTION
 
-export async function fetchRevenue() {
+export async function fetchTasksChart() {
   try {
-    // Artificially delay a response for demo purposes.
-    // Don't do this in production :)
+    const requestOptions = await extracted("GET");
 
-    // console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    const response = await fetch(`${BASE_URL}/tasks`, requestOptions)
+    const {data} = await response.json()
 
-    // const data = await sql<Revenue>`SELECT * FROM revenue`;
+    const monthsMap = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    // console.log('Data fetch completed after 3 seconds.');
+    const tasksByMonth = data.reduce((acc, task) => {
+      const date = new Date(task.deadline);
+      const month = monthsMap[date.getUTCMonth()];
 
-    return revenue;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch revenue data.');
+      if (!acc[month]) {
+        acc[month] = 0;
+      }
+      acc[month]++;
+      return acc;
+    }, {});
+
+    // Transform array model
+    return Object.entries(tasksByMonth).map(([month, amount]) => ({
+      month,
+      amount: Number(amount),
+    }));
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all projects.');
   }
 }
 
 export async function fetchLatestTasks() {
   try {
-    // const data = await sql<LatestTaskRaw>`
-    //   SELECT tasks.amount, customers.name, customers.image_url, customers.email, tasks.id
-    //   FROM tasks
-    //   JOIN customers ON tasks.customer_id = customers.id
-    //   ORDER BY tasks.date DESC
-    //   LIMIT 5`;
-    //
-    // const latestTasks = data.rows.map((task) => ({
-    //   ...task,
-    //   amount: formatCurrency(task.amount),
-    // }));
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    return latestTasks;
+    const requestOptions = await extracted("GET");
+    const users = await fetchUsers();
+
+    return await Promise.all(users.map(async (user: User) => {
+      const response = await fetch(`${BASE_URL}/tasks/user/${user.id}`, requestOptions);
+      const {to_do = 0, completed = 0, in_progress = 0} = await response.json();
+      const totalTasks = to_do + in_progress + completed;
+      return {
+        id: user.id,
+        name: user.name,
+        image_url: '/users/amy-burns.png',
+        email: user.email,
+        amount: totalTasks
+      }
+    }));
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch the latest tasks.');
   }
 }
-
-export async function fetchCardData() {
-  try {
-    // You can probably combine these into a single SQL query
-    // However, we are intentionally splitting them to demonstrate
-    // how to initialize multiple queries in parallel with JS.
-    // const taskCountPromise = sql`SELECT COUNT(*) FROM tasks`;
-    // const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    // const taskstatusPromise = sql`SELECT
-    //      SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-    //      SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
-    //      FROM tasks`;
-    //
-    // const data = await Promise.all([
-    //   taskCountPromise,
-    //   customerCountPromise,
-    //   taskstatusPromise,
-    // ]);
-    //
-    // const numberOfTasks = Number(data[0].rows[0].count ?? '0');
-    // const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    // const totalPaidTasks = formatCurrency(data[2].rows[0].paid ?? '0');
-    // const totalPendingTasks = formatCurrency(data[2].rows[0].pending ?? '0');
-    //
-    // return {
-    //   numberOfCustomers,
-    //   numberOfTasks,
-    //   totalPaidTasks,
-    //   totalPendingTasks,
-    // };
-    return {}
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch card data.');
-  }
-}
-
 
 // END DASHBOARD SECTION
 
@@ -93,8 +82,12 @@ export async function fetchFilteredTasks(
 ) {
 
   try {
-    const response = await fetch(`
-    ${BASE_URL}/tasks?page=${currentPage}&limit=${ITEMS_PER_PAGE}&query=${query}&projectId=${projectId}`);
+    const requestOptions = await extracted("GET");
+
+    const response = await fetch(
+      `${BASE_URL}/tasks?page=${currentPage}&limit=${ITEMS_PER_PAGE}&query=${query}&projectId=${projectId}`,
+      requestOptions
+    );
     const {data, meta} = await response.json()
 
     return {data: data, meta: meta}
@@ -104,19 +97,20 @@ export async function fetchFilteredTasks(
   }
 }
 
-export async function fetchTasksPages(query: string, currentPage: number, projectId: string = '') {
-  try {
-    const {meta} = await fetchFilteredTasks(query, currentPage, projectId);
-    return meta;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of tasks.');
-  }
-}
+// export async function fetchTasksPages(query: string, currentPage: number, projectId: string = '') {
+//   try {
+//     const {meta} = await fetchFilteredTasks(query, currentPage, projectId);
+//     return meta;
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch total number of tasks.');
+//   }
+// }
 
 export async function fetchTaskById(id: string) {
   try {
-    const response = await fetch(`${BASE_URL}/tasks/${id}`);
+    const requestOptions = await extracted("GET");
+    const response = await fetch(`${BASE_URL}/tasks/${id}`, requestOptions);
     return await response.json()
   } catch (error) {
     console.error('Database Error:', error);
@@ -128,48 +122,55 @@ export async function fetchTaskById(id: string) {
 
 
 // USERS SECTION
-export async function fetchCustomers() {
+export async function fetchUsers() {
   try {
-
-
-    // const customers = data.rows;
-    return customers;
+    const requestOptions = await extracted("GET");
+    const response = await fetch(`${BASE_URL}/users`, requestOptions)
+    const {data} = await response.json()
+    return data;
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch all customers.');
+    throw new Error('Failed to fetch all users.');
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
-  try {
-    // const data = await sql<CustomersTableType>`
-    // SELECT
-    //   customers.id,
-    //   customers.name,
-    //   customers.email,
-    //   customers.image_url,
-    //   COUNT(tasks.id) AS total_tasks,
-    //   SUM(CASE WHEN tasks.status = 'pending' THEN tasks.amount ELSE 0 END) AS total_pending,
-    //   SUM(CASE WHEN tasks.status = 'paid' THEN tasks.amount ELSE 0 END) AS total_paid
-    // FROM customers
-    // LEFT JOIN tasks ON customers.id = tasks.customer_id
-    // WHERE
-    //   customers.name ILIKE ${`%${query}%`} OR
-    //     customers.email ILIKE ${`%${query}%`}
-    // GROUP BY customers.id, customers.name, customers.email, customers.image_url
-    // ORDER BY customers.name ASC
-    // `;
-    //
-    // const customers = data.rows.map((customer) => ({
-    //   ...customer,
-    //   total_pending: formatCurrency(customer.total_pending),
-    //   total_paid: formatCurrency(customer.total_paid),
-    // }));
+export async function fetchFilteredUsers(query: string, currentPage: number) {
 
-    return customers;
+  try {
+    const requestOptions = await extracted("GET");
+
+    const response = await fetch
+    (`${BASE_URL}/users?page=${currentPage}&limit=${ITEMS_PER_PAGE}&query=${query}`, requestOptions);
+    const {data, meta} = await response.json()
+
+    if (!data) throw new Error('Failed to fetch projects.');
+
+    return {data, meta}
+
   } catch (err) {
     console.error('Database Error:', err);
-    throw new Error('Failed to fetch customers table.');
+    throw new Error('Failed to fetch filter all projects.');
+  }
+}
+
+export async function getTasksByUser(userId: string, status: string) {
+  const requestOptions = await extracted("GET");
+  const response = await fetch(`${BASE_URL}/tasks/user/${userId}`, requestOptions);
+  const states = await response.json()
+  states["total"] = (states["to_do"] ?? 0) + (states["in_progress"] ?? 0) + (states["completed"] ?? 0);
+  states["pending"] = (states["in_progress"] ?? 0) + (states["to_do"] ?? 0);
+
+  return states[status];
+}
+
+export async function fetchUserById(id: string, email: string = '') {
+  try {
+    const requestOptions = await extracted("GET");
+    const response = await fetch(`${BASE_URL}/users/${id}?email=${email}`, requestOptions);
+    return await response.json()
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch projects.');
   }
 }
 
@@ -177,7 +178,9 @@ export async function fetchFilteredCustomers(query: string) {
 
 export async function fetchProjects() {
   try {
-    const response = await fetch(`${BASE_URL}/projects`)
+    const requestOptions = await extracted("GET");
+
+    const response = await fetch(`${BASE_URL}/projects`, requestOptions)
     const {data} = await response.json()
 
     return transformDataProject(data);
@@ -193,13 +196,16 @@ export async function fetchProjects() {
 
 // PROJECTS SECTION
 
-export async function fetchFilteredProjects(query: string,
-                                            currentPage: number,
+export async function fetchFilteredProjects(query: string, currentPage: number
 ) {
   try {
-    const response = await fetch(`
-    ${BASE_URL}/projects?page=${currentPage}&limit=${ITEMS_PER_PAGE}&query=${query}`);
+    const requestOptions = await extracted("GET");
+
+    const response = await fetch
+    (`${BASE_URL}/projects?page=${currentPage}&limit=${ITEMS_PER_PAGE}&query=${query}`, requestOptions);
     const {data, meta} = await response.json()
+
+    if (!data) throw new Error('Failed to fetch projects.');
 
     const aData = transformDataProject(data);
 
@@ -211,19 +217,21 @@ export async function fetchFilteredProjects(query: string,
   }
 }
 
-export async function fetchProjectsPages(query: string, currentPage: number) {
-  try {
-    const {meta} = await fetchFilteredProjects(query, currentPage);
-    return meta;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch total number of projects.');
-  }
-}
+// export async function fetchProjectsPages(query: string, currentPage: number) {
+//   try {
+//     const {meta} = await fetchFilteredProjects(query, currentPage);
+//     return meta;
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch total number of projects.');
+//   }
+// }
 
 export async function fetchProjectById(id: string) {
   try {
-    const response = await fetch(`${BASE_URL}/projects/${id}`);
+    const requestOptions = await extracted("GET");
+
+    const response = await fetch(`${BASE_URL}/projects/${id}`, requestOptions);
     return await response.json()
   } catch (error) {
     console.error('Database Error:', error);

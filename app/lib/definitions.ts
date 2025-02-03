@@ -7,30 +7,24 @@ export type User = {
   name: string;
   email: string;
   password: string;
-};
-
-export type Customer = {
-  id: string;
-  name: string;
-  email: string;
-  image_url: string;
+  token: string;
 };
 
 export type Task = {
   id: string;
-  customer_id: string;
+  user_id: string;
   project_id: string;
   title: string;
   description: string;
   deadline: string;
-  status: 'to-do' | 'in-progress' | 'completed';
+  status: 'to_do' | 'in_progress' | 'completed';
   // In TypeScript, this is called a string union type.
   // It means that the "status" property can only be one of the two strings: 'pending' or 'paid'.
 };
 
-export type Revenue = {
+export type TasksChart = {
   month: string;
-  revenue: number;
+  amount: number;
 };
 
 export type LatestTask = {
@@ -48,15 +42,15 @@ export type LatestTaskRaw = Omit<LatestTask, 'amount'> & {
 
 export type TasksTable = {
   id: string;
-  customer_id: string;
+  user_id: string;
   project_id: string;
   title: string;
   description: string;
   deadline: string;
-  status: 'to-do' | 'in-progress' | 'completed';
+  status: 'to_do' | 'in_progress' | 'completed';
 };
 
-export type CustomersTableType = {
+export type UsersTableType = {
   id: string;
   name: string;
   email: string;
@@ -66,19 +60,25 @@ export type CustomersTableType = {
   total_paid: number;
 };
 
-export type FormattedCustomersTable = {
+export type FormattedUsersTable = {
   id: string;
   name: string;
   email: string;
+  role: string;
+  available: boolean;
   image_url: string;
   total_tasks: number;
   total_pending: string;
-  total_paid: string;
+  total_completed: string;
 };
 
-export type CustomerField = {
+export type UserField = {
   id: string;
   name: string;
+  role: 'admin' | 'team_member' ;
+  available: boolean;
+  projects_permission: string
+  tasks_permission: string
 };
 
 export type ProjectField = {
@@ -91,7 +91,7 @@ export type TaskForm = {
   title: string;
   description: string;
   deadline: string;
-  status: 'to-do' | 'in-progress' | 'completed';
+  status: 'to_do' | 'in_progress' | 'completed';
   projectId: number
   assignedTo: number
   createdAt: string

@@ -13,13 +13,13 @@ export default function TaskStatus({ status }: { status: string }) {
         },
       )}
     >
-      {status === 'to-do' ? (
+      {status === 'to_do' ? (
         <>
           To-Do
           <ClockIcon className="ml-1 w-4 text-gray-500" />
         </>
       ) : null}
-      {status === 'in-progress' ? (
+      {status === 'in_progress' ? (
         <>
           In Progress
           <BuildingOfficeIcon className="ml-1 w-4 text-white" />

@@ -1,4 +1,4 @@
-import {CustomerField, ProjectField} from '@/app/lib/definitions';
+import {UserField, ProjectField} from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
   CheckIcon,
@@ -11,32 +11,32 @@ import {createTask} from '@/app/lib/actions';
 import {CakeIcon} from "@heroicons/react/16/solid";
 
 type FormProps = {
-  customers: CustomerField[];
+  users: UserField[];
   projects: ProjectField[];
 };
 
-export default function Form({ customers, projects }: FormProps ) {
+export default function Form({ users, projects }: FormProps ) {
   return (
     <form action={createTask}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* User Name */}
         <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
+          <label htmlFor="user" className="mb-2 block text-sm font-medium">
             Choose user
           </label>
           <div className="relative">
             <select
-              id="customer"
-              name="customerId"
+              id="user"
+              name="userId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
               defaultValue=""
             >
               <option value="" disabled>
                 Select a user
               </option>
-              {customers.map((customer) => (
-                <option key={customer.id} value={customer.id}>
-                  {customer.name}
+              {users.map((user) => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
                 </option>
               ))}
             </select>

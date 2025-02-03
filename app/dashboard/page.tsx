@@ -1,8 +1,8 @@
 import {lusitana} from "@/app/ui/fonts";
-import RevenueChart from "@/app/ui/dashboard/revenue-chart";
+import TasksChart from "@/app/ui/dashboard/tasks-chart";
 import LatestTasks from "@/app/ui/dashboard/latest-tasks";
 import { Suspense } from "react";
-import {LatestTasksSkeleton, RevenueChartSkeleton} from "@/app/ui/skeletons";
+import {LatestTasksSkeleton, TasksChartSkeleton} from "@/app/ui/skeletons";
 
 export default async function DashboardPage() {
 
@@ -16,14 +16,14 @@ export default async function DashboardPage() {
         {/* <Card title="Pending" value={totalPendingTasks} type="pending" /> */}
         {/* <Card title="Total Tasks" value={numberOfTasks} type="tasks" /> */}
         {/* <Card
-        title="Total Customers"
-        value={numberOfCustomers}
-        type="customers"
+        title="Total Users"
+        value={numberOfUsers}
+        type="users"
       /> */}
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <Suspense fallback={<RevenueChartSkeleton/>}>
-          <RevenueChart/>
+        <Suspense fallback={<TasksChartSkeleton/>}>
+          <TasksChart/>
         </Suspense>
         <Suspense fallback={<LatestTasksSkeleton/>}>
           <LatestTasks/>

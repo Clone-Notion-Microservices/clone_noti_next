@@ -1,11 +1,10 @@
 import Form from '@/app/ui/tasks/create-form';
 import Breadcrumbs from '@/app/ui/tasks/breadcrumbs';
-import {fetchCustomers, fetchProjects} from '@/app/lib/data';
+import {fetchUsers, fetchProjects} from '@/app/lib/data';
 
 export default async function Page() {
-  const customers = await fetchCustomers();
+  const users = await fetchUsers();
   const projects = await fetchProjects();
-  console.log(projects);
   return (
     <main>
       <Breadcrumbs
@@ -18,7 +17,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form customers={customers} projects={projects} />
+      <Form users={users} projects={projects} />
     </main>
   );
 }

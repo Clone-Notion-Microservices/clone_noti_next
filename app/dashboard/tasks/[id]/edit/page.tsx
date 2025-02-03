@@ -1,17 +1,15 @@
 import Form from '@/app/ui/tasks/edit-form';
 import Breadcrumbs from '@/app/ui/tasks/breadcrumbs';
-import {fetchCustomers, fetchProjects, fetchTaskById} from "@/app/lib/data";
+import {fetchUsers, fetchProjects, fetchTaskById} from "@/app/lib/data";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const id = params.id;
-  const [task, customers, projects] = await Promise.all([
+  const [task, users, projects] = await Promise.all([
     fetchTaskById(id),
-    fetchCustomers(),
+    fetchUsers(),
     fetchProjects()
   ]);
-  // const customers = await fetchCustomers();
-  // const projects = await fetchProjects();
   return (
     <main>
       <Breadcrumbs
@@ -24,7 +22,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           },
         ]}
       />
-      <Form task={task} customers={customers} projects={projects} />
+      <Form task={task} users={users} projects={projects} />
     </main>
   );
 }

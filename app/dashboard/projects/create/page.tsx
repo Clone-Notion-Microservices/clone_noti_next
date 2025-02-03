@@ -3,7 +3,7 @@ import Breadcrumbs from '@/app/ui/tasks/breadcrumbs';
 // import {fetchProjects} from '@/app/lib/data';
 
 export default async function Page() {
-  // const customers = await fetchProjects();
+  // const users = await fetchProjects();
 
   return (
     <main>

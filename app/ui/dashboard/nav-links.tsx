@@ -6,6 +6,8 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from "next/link";
 import {usePathname} from "next/navigation";
+import { useSession } from "next-auth/react"
+import {usePermissions} from "@/hooks/usePermissions";
 
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
@@ -17,11 +19,14 @@ const links = [
     href: '/dashboard/tasks',
     icon: DocumentDuplicateIcon,
   },
-  {name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon},
+  {name: 'Users', href: '/dashboard/users', icon: UserGroupIcon},
 ];
 
 export default function NavLinks() {
   const pathname = usePathname()
+  const session = useSession()
+  // const hasAccess = usePermissions(["edit", "delete"]);
+  console.log(session)
 
   return (
     <>
